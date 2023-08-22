@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center ">Todo List</h1>
+   <div class=" container  rounded mx-auto border " id="todos">
+<p></p>
+   </div>
+  </div>
+  <script>
+    // Function to fetch all sent messages and render them in the container
+    function fetchSentData() {
+        fetch('http://localhost:5000/todos')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // JSON data
+        })
+        .then(data => {   // Handle the received messages here and render them in the container
+         
+            let division=document.getElementById("todos")
+            let p=document.createElement("div")
+            for (let i=0 ;i<data.length;i++){
+              let p=document.createElement("p")
+               p.innerText=data[i].content
+               p.setAttribute("class","bg-primary p-2 rounded")
+              division.appendChild(p)
+            }
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Error:', error);
+        });
+    }
+    // Call the function to fetch and render the messages when the page loads
+    fetchSentData();
+  </script>
+</body>
+</html>
